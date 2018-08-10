@@ -1,9 +1,11 @@
 # Files shared by the Istio demos
 
-This repository contains all of the files shared by the Istio demos for
-Kubernetes Engine.
+This repository contains files shared by several Istio demos for Kubernetes
+Engine.
 
 ## Istio Demos
+
+### Telemetry Demo
 
 This project demonstrates how to use an Istio service mesh in a single
 Kubernetes Engine cluster alongside Prometheus, Jaeger, and Grafana, to monitor
