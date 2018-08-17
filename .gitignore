@@ -16,3 +16,5 @@
 Session.vim
 .netrwhist
 
+# Do not commit the expanded istio release tar
+istio-*
