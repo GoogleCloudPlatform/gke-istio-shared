@@ -37,18 +37,16 @@ INGRESS_PORT=$(kubectl get -n "$ISTIO_NAMESPACE" service istio-ingressgateway -o
 
 # Curl for /productpage with retries
 until [[ $(curl -s -o /dev/null --fail -w "%{http_code}\n"\
-           http://"${INGRESS_HOST}":"${INGRESS_PORT}"/productpage) -eq 200  ||
-         ${RETRY_COUNT} -gt 12 ]]; do
+           http://"${INGRESS_HOST}":"${INGRESS_PORT}"/productpage) -eq 200 ]]; do
+    if [[ ${RETRY_COUNT} -gt 24 ]]; then
+     echo "Retry count exceeded. Exiting..."
+     exit 1
+    fi
     NUM_SECONDS="$(( RETRY_COUNT * SLEEP ))"
     echo "/productpage did not return an HTTP 200 response code after"
     echo "${NUM_SECONDS} seconds"
     sleep "${SLEEP}"
     RETRY_COUNT="$(( RETRY_COUNT + 1 ))"
 done
-
-if [[ ${RETRY_COUNT} -gt 12 ]]; then
-  echo "Retry count exceeded. Exiting..."
-  exit 1
-fi
 
 echo "/productpage returns an HTTP 200 response code"
