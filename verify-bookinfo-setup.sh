@@ -21,6 +21,7 @@
 
 ISTIO_NAMESPACE="${1}"
 SHARED_DIR="${2}"
+MAX_COUNT=48
 RETRY_COUNT=0
 SLEEP=10
 
@@ -38,7 +39,7 @@ INGRESS_PORT=$(kubectl get -n "$ISTIO_NAMESPACE" service istio-ingressgateway -o
 # Curl for /productpage with retries
 until [[ $(curl -s -o /dev/null --fail -w "%{http_code}\n"\
            http://"${INGRESS_HOST}":"${INGRESS_PORT}"/productpage) -eq 200 ]]; do
-    if [[ ${RETRY_COUNT} -gt 24 ]]; then
+    if [[ "${RETRY_COUNT}" -gt "${MAX_COUNT}" ]]; then
      echo "Retry count exceeded. Exiting..."
      exit 1
     fi
