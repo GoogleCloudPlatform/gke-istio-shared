@@ -64,10 +64,6 @@ spec:
       }
     stage('Lint') {
         container(containerName) {
-          sh "sed -e \"s/<YOUR_PROJECT>/${env.PROJECT_ID}/g\" \
-            -e \"s/<YOUR_ZONE>/${env.ZONE}/g\" \
-            -e \"s/<YOUR_REGION>/${env.REGION}/g\" \
-            properties > properties.env"
           sh "make lint"
       }
     }
