@@ -23,7 +23,7 @@ limitations under the License.
 
 // set up pod label and GOOGLE_APPLICATION_CREDENTIALS (for Terraform)
 def label = "k8s-infra"
-def containerName = "k8s-node"
+def containerName = "jnlp"
 def GOOGLE_APPLICATION_CREDENTIALS    = '/home/jenkins/dev/jenkins-deploy-dev-infra.json'
 
 podTemplate(label: label, yaml: """
@@ -34,7 +34,7 @@ metadata:
     jenkins: build-node
 spec:
   containers:
-  - name: jnlp
+  - name: containerName
     image: gcr.io/pso-helmsman-cicd/jenkins-k8s-node:${env.CONTAINER_VERSION}
     command: ['cat']
     tty: true
