@@ -83,4 +83,5 @@ spec:
       throw err
    }
   }
+  echo "success"
 }
