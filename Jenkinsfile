@@ -34,7 +34,7 @@ metadata:
     jenkins: build-node
 spec:
   containers:
-  - name: containerName
+  - name: ${containerName}
     image: gcr.io/pso-helmsman-cicd/jenkins-k8s-node:${env.CONTAINER_VERSION}
     command: ['cat']
     tty: true
