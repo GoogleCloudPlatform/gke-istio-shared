@@ -23,7 +23,7 @@ limitations under the License.
 
 // set up pod label and GOOGLE_APPLICATION_CREDENTIALS (for Terraform)
 def label = "k8s-infra"
-def containerName = "jnlp"
+def containerName = "k8s-node"
 def GOOGLE_APPLICATION_CREDENTIALS    = '/home/jenkins/dev/jenkins-deploy-dev-infra.json'
 
 podTemplate(label: label, yaml: """
@@ -67,15 +67,11 @@ spec:
         container(containerName) {
           // checkout code from scm i.e. commits related to the PR
           checkout scm
-
-          containerLog 'jnlp'
          }
       }
     stage('Lint') {
         container(containerName) {
           sh "make lint"
-
-          containerLog 'jnlp'
       }
     }
   }
@@ -84,7 +80,6 @@ spec:
       // and display a detailed message on the Jenkins console output
       currentBuild.result = 'FAILURE'
       echo "FAILURE caught echo ${err}"
-      containerLog 'jnlp'
       throw err
    }
   }
