@@ -67,11 +67,15 @@ spec:
         container(containerName) {
           // checkout code from scm i.e. commits related to the PR
           checkout scm
+
+          containerLog 'jnlp'
          }
       }
     stage('Lint') {
         container(containerName) {
           sh "make lint"
+
+          containerLog 'jnlp'
       }
     }
   }
@@ -80,6 +84,7 @@ spec:
       // and display a detailed message on the Jenkins console output
       currentBuild.result = 'FAILURE'
       echo "FAILURE caught echo ${err}"
+      containerLog 'jnlp'
       throw err
    }
   }
