@@ -72,6 +72,10 @@ test_integration() {
     echo "SUCCESS: Web UI reflects DB change"
     return 0
   else
+    if [[ $(echo "${AFTER}" | grep "glyphicon-star" | grep -cv "glyphicon-star-empty") == $((4 + "${2}")) ]]; then
+      echo "SUCCESS: No changes made to database as new value is same as old value"
+      return 0
+    fi
     echo "ERROR: DB change wasn't reflected in web UI:"
     diff --suppress-common-lines <(echo "${AFTER}") <(echo "${BEFORE}")
     return 1
@@ -105,7 +109,7 @@ do
     exit 1
   fi
 
-  if test_integration "$APP_URL" $(( x % 5 + 1 )); then
+  if test_integration "$APP_URL" "${1}"; then
     exit 0
   fi
   sleep 10
