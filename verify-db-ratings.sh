@@ -105,7 +105,7 @@ do
     exit 1
   fi
 
-  if test_integration "$APP_URL" $(( x % 5 + 1 )); then
+  if test_integration "$APP_URL" "${2}"; then
     exit 0
   fi
   sleep 10
